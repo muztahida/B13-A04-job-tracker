@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>job tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+<h1>Job Application Tracker</h1>
+
+<div class="dashboard">
+  <div class="card-box">
+    <h3>Total</h3>
+    <div class="count total" id="totalCount">8</div>
+  </div>
+  <div class="card-box">
+    <h3>Interview</h3>
+    <div class="count interview" id="interviewCount">0</div>
+  </div>
+  <div class="card-box">
+    <h3>Rejected</h3>
+    <div class="count rejected" id="rejectedCount">0</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Available Jobs</h2>
+  <h4 id="jobCountText">8 jobs</h4>
+</div>
+
+<div class="tabs">
+  <button class="active" onclick="filterJobs('all')">All</button>
+  <button onclick="filterJobs('interview')">Interview</button>
+  <button onclick="filterJobs('rejected')">Rejected</button>
+</div>
+
+<div class="jobs" id="jobsContainer"></div>
+
+</div>
+
+<script>
+let jobs = [
+{id:1,company:"Mobile First Corp",position:"React Native Developer",location:"Remote",type:"Full-time",salary:"$130,000 - $175,000",desc:"Develop mobile apps using React Native.",status:"none"},
+{id:2,company:"WebFlow Agency",position:"Web Designer",location:"Los Angeles",type:"Part-time",salary:"$80,000 - $120,000",desc:"Design modern responsive websites.",status:"none"},
+{id:3,company:"DataViz Solutions",position:"Data Visualization Specialist",location:"Boston",type:"Full-time",salary:"$125,000 - $165,000",desc:"Create interactive dashboards and reports.",status:"none"},
+{id:4,company:"CloudFirst Inc",position:"Backend Developer",location:"Seattle",type:"Full-time",salary:"$140,000 - $190,000",desc:"Build scalable backend systems with AWS.",status:"none"},
+{id:5,company:"Innovation Labs",position:"UI/UX Engineer",location:"Austin",type:"Full-time",salary:"$100,000 - $150,000",desc:"Design user interfaces and improve UX.",status:"none"},
+{id:6,company:"MegaCorp Solutions",position:"JavaScript Developer",location:"New York",type:"Full-time",salary:"$130,000 - $170,000",desc:"Develop enterprise web applications.",status:"none"},
+{id:7,company:"StartupXYZ",position:"Full Stack Engineer",location:"Remote",type:"Full-time",salary:"$120,000 - $160,000",desc:"Work on startup product using MERN stack.",status:"none"},
+{id:8,company:"TechCorp Industries",position:"Senior Frontend Developer",location:"San Francisco",type:"Full-time",salary:"$130,000 - $175,000",desc:"Build scalable React applications.",status:"none"}
+];
+
+let currentTab = "all";
+
+function renderJobs(){
+  const container = document.getElementById("jobsContainer");
+  container.innerHTML = "";
+
+  let filtered = jobs.filter(job=>{
+    if(currentTab==="all") return true;
+    return job.status===currentTab;
+  });
+
+  document.getElementById("jobCountText").innerText = filtered.length+" jobs";
+
+  if(filtered.length===0){
+    container.innerHTML = `
+      <div class="empty">
+        <img src="image/jobs.png">
+        <h3>No jobs available</h3>
+        <p>Check back soon for new job opportunities</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach(job=>{
+    const card = document.createElement("div");
+    card.className="job-card";
+    card.innerHTML = `
+      <div class="job-header">
+        <div>
+          <h3>${job.company}</h3>
+          <p>${job.position}</p>
+          <small>${job.location} | ${job.type} | ${job.salary}</small>
+          <div class="badge">${job.status==="none"?"NOT APPLIED":job.status.toUpperCase()}</div>
+          <p>${job.desc}</p>
+        </div>
+        <button class="delete-btn btn" onclick="deleteJob(${job.id})">🗑</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn interview-btn" onclick="setStatus(${job.id},'interview')">Interview</button>
+        <button class="btn reject-btn" onclick="setStatus(${job.id},'rejected')">Rejected</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  updateCounts();
+}
+
+function setStatus(id,status){
+  let job = jobs.find(j=>j.id===id);
+  if(job.status===status){
+    job.status="none";
+  }else{
+    job.status=status;
+  }
+  renderJobs();
+}
+
+function deleteJob(id){
+  jobs = jobs.filter(j=>j.id!==id);
+  renderJobs();
+}
+
+function filterJobs(tab){
+  currentTab = tab;
+  document.querySelectorAll(".tabs button").forEach(btn=>btn.classList.remove("active"));
+  event.target.classList.add("active");
+  renderJobs();
+}
+
+function updateCounts(){
+  document.getElementById("totalCount").innerText = jobs.length;
+  document.getElementById("interviewCount").innerText = jobs.filter(j=>j.status==="interview").length;
+  document.getElementById("rejectedCount").innerText = jobs.filter(j=>j.status==="rejected").length;
+}
+
+renderJobs();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#f4f6f9;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+h1{
+  color:#1e3a5f;
+}
+.dashboard{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.card-box{
+  flex:1;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.card-box h3{
+  margin:0;
+  font-size:14px;
+  color:#555;
+}
+.count{
+  font-size:28px;
+  margin-top:10px;
+  font-weight:bold;
+}
+.total{color:#1e3a5f}
+.interview{color:green}
+.rejected{color:red}
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:40px;
+}
+.tabs{
+  margin-top:10px;
+}
+.tabs button{
+  padding:8px 15px;
+  border:none;
+  margin-right:5px;
+  cursor:pointer;
+  border-radius:5px;
+  background:#ddd;
+}
+.tabs .active{
+  background:#1e3a5f;
+  color:#fff;
+}
+.jobs{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+.job-card{
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.job-header{
+  display:flex;
+  justify-content:space-between;
+}
+.badge{
+  background:#e5e7eb;
+  padding:5px 10px;
+  border-radius:5px;
+  font-size:12px;
+  margin-top:10px;
+  display:inline-block;
+}
+.btn-group{
+  margin-top:15px;
+}
+.btn{
+  padding:6px 12px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+.interview-btn{background:#d1fae5;color:#065f46;}
+.reject-btn{background:#fee2e2;color:#991b1b;}
+.delete-btn{background:#ddd;margin-left:5px;}
+.empty{
+  text-align:center;
+  padding:60px;
+  background:#fff;
+  border-radius:8px;
+}
+.empty img{
+  width:80px;
+  opacity:0.5;
+}
+
+@media(max-width:768px){
+  .dashboard{
+    flex-direction:column;
+  }
+}
